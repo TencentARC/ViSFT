@@ -1,0 +1,67 @@
+model_config:
+  visft:
+    base_args:
+      lr_backbone: 0
+      backbone: EVA-CLIP-G
+      backbone_dir: path/eva_vit_g.pth
+      grad_checkpointing: false
+      num_queries:
+        detection:
+          detection_coco: 100
+      share_decoders: false
+      decoder_hidden_dim: 256
+      dilation: true
+      use_task_embedding_in_img_encoder: true
+      use_task_embedding_in_lang_encoder: true
+    losses:
+    - logit_bce
+    # initialize the ResNet convnet backbone from DETR
+    base_ckpt_path: ''
+    base_ckpt_load_backbone_only: true
+
+evaluation:
+  metrics:
+  - type: detection_mean_ap
+    key: detection_mean_ap
+    datasets:
+    - detection_coco
+    params:
+      dataset_json_files:
+        detection_coco:
+          val: /public_datasets/coco/annotations/instances_val2017.json
+
+optimizer:
+  type: adam_w  # HuggingFace transformer's AdamW
+  enable_state_sharding: false
+  params:
+    lr: 5e-5
+    eps: 1e-8
+    weight_decay: 1e-4
+
+scheduler:
+  type: warmup_cosine
+  params:
+    num_warmup_steps: 2000
+    num_training_steps: ${training.max_updates}
+
+training:
+  num_workers: 2
+  # these are mostly the same as in COCO detection training
+  clip_norm_mode: all
+  clip_gradients: true
+  max_grad_l2_norm: 0.1
+  lr_scheduler: true
+  lr_ratio: 0.1
+  batch_size: 8 # total bs, 1 per GPU
+  max_updates: 150000
+  evaluation_interval: 1000000
+  dataset_size_proportional_sampling: false
+  early_stop:
+    enabled: false
+    criteria: detection_coco/detection_mean_ap
+    minimize: false
+  stdout_capture: false
+  find_unused_parameters: true
+
+checkpoint:
+  max_to_keep: 500

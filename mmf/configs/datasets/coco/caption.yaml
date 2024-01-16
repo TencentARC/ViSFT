@@ -1,0 +1,15 @@
+dataset_config:
+  caption_coco:
+    num_workers: 4
+    # batch_size: 32 # 32 per gpu for stage1 training； 8 for stage2 saving cuda memory
+    images:
+      /processed_datasets/coco_caption_hdf5_files/
+    annotations:
+      train:
+      - /processed_datasets/coco_caption_hdf5_files/TRAIN_CAPTIONS_coco_5_cap_per_img_5_min_word_freq.json
+      val:
+      - /processed_datasets/coco_caption_hdf5_files/VAL_CAPTIONS_coco_5_cap_per_img_5_min_word_freq.json
+      test:
+      - /processed_datasets/coco_caption_hdf5_files/TEST_CAPTIONS_coco_5_cap_per_img_5_min_word_freq.json
+
+    

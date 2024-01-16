@@ -1,0 +1,59 @@
+dataset_config:
+  coco:
+    data_dir: /group/30042/public_datasets
+    depth_first: false
+    fast_read: false
+    use_images: false
+    use_features: true
+    # zoo_requirements:
+    # - coco.defaults
+    # annotation_style can be coco or textcaps which allows us to override
+    # the dataset class
+    annotation_style: coco
+    images:
+      train:
+      - /group/30042/public_datasets/coco/train2014
+      val:
+      - /group/30042/public_datasets/coco/val2014
+      test:
+      - /group/30042/public_datasets/coco/test2015
+    features:
+      train:
+      - coco/defaults/features/trainval2014.lmdb
+      val:
+      - coco/defaults/features/trainval2014.lmdb
+      test:
+      - coco/defaults/features/trainval2014.lmdb
+    annotations:
+      train:
+      - coco/defaults/annotations/imdb_karpathy_train.npy
+      val:
+      - coco/defaults/annotations/imdb_karpathy_val.npy
+      test:
+      - coco/defaults/annotations/imdb_karpathy_test.npy
+    max_features: 100
+    processors:
+      text_processor:
+        type: vocab
+        params:
+          max_length: 52
+          vocab:
+            type: intersected
+            embedding_name: glove.6B.300d
+            vocab_file: coco/defaults/extras/vocabs/vocabulary_captioning_thresh5.txt
+          preprocessor:
+            type: simple_sentence
+            params: {}
+      caption_processor:
+        type: caption
+        params:
+          vocab:
+            type: intersected
+            embedding_name: glove.6B.300d
+            vocab_file: coco/defaults/extras/vocabs/vocabulary_captioning_thresh5.txt
+    min_captions_per_img: 5
+    return_features_info: false
+    # Return OCR information
+    use_ocr: false
+    # Return spatial information of OCR tokens if present
+    use_ocr_info: false

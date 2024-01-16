@@ -1,0 +1,31 @@
+dataset_config:
+  segment_coco:
+    use_images: true
+    data_dir: /group/30042/public_datasets
+    images:
+      train:
+      - /public_datasets/coco/train2017
+      val:
+      - /public_datasets/coco/val2017
+      test:
+      - /public_datasets/coco/test2017
+    annotations:
+      train:
+      - /public_datasets/coco/annotations/instances_train2017.json
+      val:
+      - /public_datasets/coco/annotations/instances_val2017.json
+      test:
+      - /public_datasets/coco/annotations/image_info_test-dev2017.json
+    load_attributes: false  # COCO has no attribute annotations
+    processors:
+      mask2former_image_and_target_processor:
+        type: mask2former_image_and_target
+        params:
+          min_scale: 0.1
+          max_scale: 2.0
+          target_size: 1024
+          test_short: 730
+          test_long: 1216
+      convert_coco_polys_to_mask:
+        type: convert_coco_polys_to_mask
+    max_target_enc_size: 46140280  # maximum number of bytes to encode detection targets into pickle

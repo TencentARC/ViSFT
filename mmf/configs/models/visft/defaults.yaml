@@ -1,0 +1,64 @@
+model_config:
+  visft:
+    segment_ckpt_path: ''
+    detection_ckpt_path: ''
+    caption_ckpt_path: ''
+    base_ckpt_path: ''  
+    base_ckpt_load_backbone_only: false
+    detection_loss_weight: 1.
+
+    base_args:
+      lr_backbone: 0
+      backbone: EVA-CLIP-G
+      backbone_dir: /group/30042/xiaohujiang/codes/LAVIS/vit_g_chkpt/eva_vit_g.pth
+      dilation: false
+      position_embedding: sine
+      enc_layers: 6
+      dec_layers: 6
+      dim_feedforward: 1024
+      encoder_hidden_dim: 128
+      dropout: 0.1
+      nheads: 8
+      # Override the config
+      pre_norm: false
+      pass_pos_and_query: true
+      # detection losses
+      aux_loss: true
+      use_bcl: false
+      set_cost_class: 1.
+      set_cost_bbox: 5.
+      set_cost_giou: 2.
+      mask_loss_coef: 1.
+      dice_loss_coef: 1.
+      bbox_loss_coef: 5.
+      giou_loss_coef: 2.
+      attr_loss_coef: 1.
+      eos_coef: 0.1
+      # separate dimensionality for decoder
+      decoder_hidden_dim: 256
+      num_queries: {}
+      share_decoders: false
+      residual_in_encoder: true
+      use_task_embedding_in_img_encoder: false
+      use_task_embedding_in_lang_encoder: false
+      # Visual Genome attribute data properties
+      attribute_class_num: 401
+      max_attribute_num: 16
+      bert_config:
+        bert_model_name: bert-base-uncased
+
+    heads:
+      detection:
+        detection_coco:
+          task_idx: 0
+          num_classes: 91
+          use_attr: false
+      caption:
+        caption_coco:
+          task_idx: 1
+          loss_type: cross_entropy
+      segment:
+        segment_coco:
+          task_idx: 2
+    max_task_num: 256
+    predict_attributes: false

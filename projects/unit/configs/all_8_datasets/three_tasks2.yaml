@@ -1,0 +1,87 @@
+model_config:
+  unit:
+    base_args:
+      num_queries:
+        detection:
+          detection_coco: 100
+      share_decoders: false
+      decoder_hidden_dim: 256
+      dilation: true
+      use_task_embedding_in_img_encoder: true
+      use_task_embedding_in_lang_encoder: true
+    losses:
+    - logit_bce
+    # initialize the ResNet convnet backbone from DETR
+    base_ckpt_path: ''
+    base_ckpt_load_backbone_only: true
+    caption_ckpt_path: '/group/30042/xiaohujiang/codes/mmf/save/unit/caption_eval2/models/model_55000_1479.ckpt'
+    segment_ckpt_path: '/group/30042/xiaohujiang/codes/mmf/save/unit/seg_pretrain_8gpus_triple_schedules/current.ckpt'
+    detection_ckpt_path: '/group/30042/xiaohujiang/codes/mmf/save/unit/detection_pretrain/current.ckpt'
+
+evaluation:
+  metrics:
+  # - coco_caption_bleu4
+  - type: detection_mean_ap
+    key: detection_mean_ap
+    datasets:
+    - detection_coco
+    params:
+      dataset_json_files:
+        detection_coco:
+          val: /group/30042/public_datasets/coco/annotations/instances_val2017.json
+  # - type: segment_mean_ap
+  #   key: segment_mean_ap
+  #   datasets:
+  #   - segment_coco
+  #   params:
+  #     dataset_json_files:
+  #       segment_coco:
+  #         val: /group/30042/public_datasets/coco/annotations/instances_val2017.json
+  
+optimizer:
+  type: adam_w  # HuggingFace transformer's AdamW
+  # allow_unused_parameters: true
+  params:
+    lr: 5e-5
+    eps: 1e-8
+    weight_decay: 1e-4
+    
+
+scheduler:
+  type: warmup_cosine
+  params:
+    num_warmup_steps: 2000
+    num_training_steps: ${training.max_updates}
+
+training:
+  num_workers: 2
+  # these are mostly the same as in COCO detection training
+  log_interval: 100
+  clip_norm_mode: all
+  clip_gradients: true
+  max_grad_l2_norm: 0.1
+  lr_scheduler: true
+  lr_ratio: 0.1
+  batch_size: 2 # total bs, 1 per GPU
+  max_updates: 500000
+  checkpoint_interval: 1000
+  evaluation_interval: 1000000
+  dataset_size_proportional_sampling: false
+  early_stop:
+    enabled: false
+    criteria: detection_coco/detection_mean_ap
+    minimize: false
+  stdout_capture: false
+  find_unused_parameters: true
+
+multitasking:
+  enabled: true
+  type: ratios
+  params:
+    sampling_ratios:
+      # caption_coco: 0.4
+      # segment_coco: 0.3
+      detection_coco: 1.0
+
+checkpoint:
+  max_to_keep: 5

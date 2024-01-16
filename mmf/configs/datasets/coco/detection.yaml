@@ -1,0 +1,29 @@
+dataset_config:
+  detection_coco:
+    use_images: true
+    data_dir: /public_datasets
+    images:
+      train:
+      - /public_datasets/coco/train2017
+      val:
+      - /public_datasets/coco/val2017
+      test:
+      - /public_datasets/coco/test2017
+    annotations:
+      train:
+      - /public_datasets/coco/annotations/instances_train2017.json
+      val:
+      - /public_datasets/coco/annotations/instances_val2017.json
+      test:
+      - /public_datasets/coco/annotations/image_info_test-dev2017.json
+    load_attributes: false  # COCO has no attribute annotations
+    processors:
+      detection_image_and_target_processor:
+        type: detr_image_and_target
+        params:
+          train_image_sizes: [480, 512, 544, 576, 608, 640, 672]
+          train_resize_random_sizes: [400, 500, 600]
+          train_crop_size: [384, 600]
+          test_image_size: 800
+          max_size: 672
+    max_target_enc_size: 16382  # maximum number of bytes to encode detection targets into pickle
