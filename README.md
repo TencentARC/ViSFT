@@ -116,6 +116,7 @@ backbone_dir: path/eva_vit_g.pth
 ```
 Implementing training
 ```
+# can be executed in parallel
 bash ./scripts/stage1_train/eva_g/caption.sh
 bash ./scripts/stage1_train/eva_g/detection.sh
 bash ./scripts/stage1_train/eva_g/segment.sh
