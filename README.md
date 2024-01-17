@@ -24,7 +24,7 @@ conda create -n ViSFT python=3.8
 
 conda activate ViSFT
 ```
-### Install pytorch
+### install pytorch
 we use torch1.12 with CUDA11.3 on 8 NVIDIA Volta V100- SXM2-32GB GPUs
 ```
 pip install --extra-index-url https://download.pytorch.org/whl/cu113 torch==1.12.0
@@ -54,7 +54,7 @@ sudo sh make.sh
 cd ../../../../
 ```
 
-### Other packages installation
+### other packages installation
 ```
 pip install -r requirements.txt
 ```
@@ -83,7 +83,7 @@ DATA_PATH/
         ├──VAL_IMAGES_coco_5_cap_per_img_5_min_word_freq.hdf5
         └───WORDMAP_coco_5_cap_per_img_5_min_word_freq.json
 ```
-### Detection & Segmentation
+### detection & segmentation
 
 file strcture:
 
@@ -125,7 +125,7 @@ bash ./scripts/stage1_train/eva_g/segment.sh
 
 Preparing EVA-CLIP weights from [EVA](https://huggingface.co/QuanSun/EVA-CLIP/blob/main/EVA02_CLIP_E_psz14_plus_s9B.pt)
 
-Extact ViT weights
+Extract ViT weights
 ```
 python ./scripts/preprocess/extract_eva_e_vit.py
 ```
