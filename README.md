@@ -2,7 +2,7 @@ This is the official repo for paper [Supervised Fine-tuning *in turn* Improves V
 
 <div align="center">
 
-📃[**Paper (ArXiv)**](https://arxiv.org/abs/2401.10222) **|** [**Code**](https://github.com/TencentARC/ViSFT/edit/main/README.md) **|** 🤗[**Huggingface**](https://huggingface.co/TencentARC/ViSFT)
+📃[**Paper (ArXiv)**](https://arxiv.org/abs/2401.10222) **|** [**Code**](https://github.com/TencentARC/ViSFT) **|** 🤗[**Huggingface**](https://huggingface.co/TencentARC/ViSFT)
 
 
 
