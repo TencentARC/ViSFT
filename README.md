@@ -12,7 +12,7 @@ This is the official repo for paper [Supervised Fine-tuning *in turn* Improves V
 * [2024/01/19] We open source the [ViSFT]() including training scripts and weights. Evaluation codes will be released soon.
 
 ## Introduction
-Image-text training like CLIP has dominated the pretraining of vision foundation models in recent years. Subsequent efforts have been made to introduce region-level visual learning into CLIP’s pretraining but face scalability challenges due to the lack of large-scale region-level datasets. Drawing inspiration from supervised fine-tuning (SFT) in natural language processing such as instruction tuning, we explore the potential of fine-grained SFT in enhancing the generation of vision foundation models after their pretraining. Thus a two-stage method **ViSFT** (**Vi**sion **SFT**) is proposed to unleash the fine-grained knowledge of vision foun- dation models. In ViSFT, the vision foundation model is enhanced by performing visual joint learning on some in-domain tasks and then tested on out-of-domain benchmarks. With updating using ViSFT on 8 V100 GPUs in less than 2 days, a vision transformer with over 4.4B parameters shows improvements across various out-of-domain benchmarks including vision and vision-linguistic scenarios.
+Image-text training like CLIP has dominated the pretraining of vision foundation models in recent years. Subsequent efforts have been made to introduce region-level visual learning into CLIP’s pretraining but face scalability challenges due to the lack of large-scale region-level datasets. Drawing inspiration from supervised fine-tuning (SFT) in natural language processing such as instruction tuning, we explore the potential of fine-grained SFT in enhancing the generation of vision foundation models after their pretraining. Thus a two-stage method **ViSFT** (**Vi**sion **SFT**) is proposed to unleash the fine-grained knowledge of vision foundation models. In ViSFT, the vision foundation model is enhanced by performing visual joint learning on some in-domain tasks and then tested on out-of-domain benchmarks. With updating using ViSFT on 8 V100 GPUs in less than 2 days, a vision transformer with over 4.4B parameters shows improvements across various out-of-domain benchmarks including vision and vision-linguistic scenarios.
 
 <img src="./assets/overview.png" align=center />
 
@@ -209,6 +209,16 @@ Or use the LoRA weights we provide:
 The code of ViSFT is based on the official implementation of [mmf](https://github.com/facebookresearch/mmf), [EVA](https://github.com/baaivision/EVA/tree/master) and [LAVIS](https://github.com/salesforce/LAVIS/tree/main)
 
 ## Citation
-
+If you found our work valuable, please cite:
+```
+@misc{jiang2024supervised,
+      title={Supervised Fine-tuning in turn Improves Visual Foundation Models}, 
+      author={Xiaohu Jiang and Yixiao Ge and Yuying Ge and Chun Yuan and Ying Shan},
+      year={2024},
+      eprint={2401.10222},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+```
 
 
